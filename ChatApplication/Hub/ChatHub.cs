@@ -15,7 +15,7 @@
             _connection[Context.ConnectionId] = userConnection;
 
             await Clients.Group(userConnection.Room!)
-                .SendAsync("ReveiveMessage", "", $"{userConnection.User} has joind the group");
+                .SendAsync("ReceiveMessage", "", $"{userConnection.User} has joind the group");
             await SendConnectedUsers(userConnection.Room!);
         }
 
@@ -24,7 +24,7 @@
             if (_connection.TryGetValue(Context.ConnectionId, out UserRoomConnection userRoomConnection))
             {
                 await Clients.Group(userRoomConnection.Room!)
-                        .SendAsync("ReveiveMessage", userRoomConnection.User, message, DateTime.Now);
+                        .SendAsync("ReceiveMessage", userRoomConnection.User, message, DateTime.Now);
             }
         }
 
@@ -40,7 +40,7 @@
                 return base.OnDisconnectedAsync(exception);
 
             Clients.Group(userConnection.Room!)
-                .SendAsync("ReveiveMessage", "", $"{userConnection.User} has left the group");
+                .SendAsync("ReceiveMessage", "", $"{userConnection.User} has left the group");
             SendConnectedUsers(userConnection.Room!);
             return base.OnDisconnectedAsync(exception);
         }
